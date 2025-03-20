@@ -8,13 +8,15 @@ on:
   pull_request:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     name: Ruby ${{ matrix.ruby }}
     strategy:
       matrix:
         ruby:
-          - '3.4.1'
+          - '3.2.7'
+          - '3.3.7'
+          - '3.4.2'
 
     steps:
       - uses: actions/checkout@v4
