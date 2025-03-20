@@ -1,8 +1,8 @@
 # Darkfang
 
-TODO: Delete this and the text below, and describe your gem
+Darkfang is a lightweight, Ruby-based MUD system designed to help developers quickly set up and build their own multi-user dungeon(MUD) games. 
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/darkfang`. To experiment with that code, run `bin/console` for an interactive prompt.
+It is not based on any previous MUD system.
 
 ## Installation
 
