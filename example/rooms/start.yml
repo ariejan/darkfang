@@ -1,0 +1,8 @@
+room:
+  name: Drawbridge to Darkfang Castle
+  description: Lots of description here about the drawbridge and it's poor state of maintenance.
+
+  automation:
+    - type: cron
+      cron: "0 * * * *"
+      command: "echo 'The clock in the bell tower strikes the hour.'"

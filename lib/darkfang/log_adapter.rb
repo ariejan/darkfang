@@ -57,7 +57,7 @@ module Darkfang
 
       message = yield if block_given?
       message = message.to_s.gsub(/\s+/, " ")
-      topic = formatted_topic(topic, block_given?)
+      topic = formatted_topic(topic, colon: block_given?)
       out = topic + message
       messages << out
       out

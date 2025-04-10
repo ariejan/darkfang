@@ -1,0 +1,8 @@
+item:
+  - name: Sword of the Uninitiated
+  - attack: 1
+  - defense: 0
+  - description: A simple sword.
+  - weight: 1
+  - type: weapon
+  
