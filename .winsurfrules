@@ -7,8 +7,10 @@ Code Style and Structure 
     - Prefer iteration and modularization over code duplication. 
     - Use descriptive variable and method names (e.g., user_signed_in?, calculate_total). 
     - Structure files according to Ruby conventions.   
+    - Write/update rspec unit and / or feature tests for everything
     
-Naming Conventions - Use snake_case for file names, method names, and variables. 
+Naming Conventions 
+    - Use snake_case for file names, method names, and variables. 
     - Use CamelCase for class and module names. 
     - Follow Ruby naming conventions.   
     
@@ -20,4 +22,4 @@ Syntax and Formatting 
 Error Handling and Validation
     - Use exceptions for exceptional cases, not for control flow. 
     - Implement proper error logging and user-friendly messages.   
-    f
+    

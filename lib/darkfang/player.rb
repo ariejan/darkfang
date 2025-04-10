@@ -171,5 +171,10 @@ module Darkfang
         "characters" => @characters.map(&:id)
       }.to_json
     end
+    
+    def save
+      player_file = File.join(Darkfang.root, "data", "players", "#{@email}.json")
+      File.write(player_file, to_json)
+    end
   end
 end
