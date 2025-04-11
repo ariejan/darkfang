@@ -67,6 +67,24 @@ module Darkfang
       data.dig("server", "port") || 4532
     end
 
+    def web_enabled
+      data.dig("web", "enabled").nil? ? true : data.dig("web", "enabled")
+    end
+
+    def web_port
+      data.dig("web", "port") || (server_port + 1)
+    end
+
+    def colors
+      data.dig("web", "colors") || {
+        "primary" => "#2c3e50",
+        "secondary" => "#34495e",
+        "accent" => "#e74c3c",
+        "text" => "#ecf0f1",
+        "background" => "#1a1a1a"
+      }
+    end
+
     def title
       data.dig("darkfang", "title") || "Untitled Darkfang"
     end

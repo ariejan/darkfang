@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
 module Darkfang
-  # Telnet server for Darkfang
+  # Server for Darkfang
   class Server
-    attr_reader :host, :port, :connections
+    attr_reader :host, :port, :connections, :web_server
 
-    def initialize(host, port)
+    def initialize(host, port, web_enabled: true, web_port: nil)
       @host = host
       @port = port
+      @web_enabled = web_enabled
+      @web_port = web_port || (port + 1)
       @connections = []
       @running = false
       @server = nil
+      @web_server = nil
     end
 
     def start
@@ -23,8 +26,16 @@ module Darkfang
       @server = TCPServer.new(@host, @port)
       @running = true
 
-      Darkfang.logger.info("Server started on #{@host}:#{@port}")
+      Darkfang.logger.info("Telnet server started on #{@host}:#{@port}")
       Darkfang.logger.info("Game title: #{Darkfang.config.title}")
+
+      # Start web server if enabled
+      if @web_enabled
+        require_relative 'web/server'
+        @web_server = Darkfang::Web::Server.new(@host, @web_port)
+        @web_server.start
+        Darkfang.logger.info("Web UI available at http://#{@host == '0.0.0.0' ? 'localhost' : @host}:#{@web_port}")
+      end
 
       # Start automation thread
       @automation_thread = Thread.new do
@@ -64,8 +75,13 @@ module Darkfang
         end
       end
 
-      # Wait for the accept thread to finish
-      @accept_thread.join
+      # Keep the server running until shutdown
+      while @running
+        sleep 0.1
+      end
+
+      # Return immediately after starting threads
+      @accept_thread
     end
 
     def stop
@@ -80,11 +96,14 @@ module Darkfang
       # Close the server
       @server.close if @server
       
+      # Stop the web server if enabled
+      @web_server&.stop if @web_enabled
+      
       # Stop the automation thread
-      @automation_thread.kill if @automation_thread
+      @automation_thread&.kill
       
       # Stop the accept thread
-      @accept_thread.kill if @accept_thread
+      @accept_thread&.kill
 
       Darkfang.logger.info("Server stopped")
     end

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    :root {
+      --primary-color: <%= colors['primary'] || '#2c3e50' %>;
+      --secondary-color: <%= colors['secondary'] || '#34495e' %>;
+      --accent-color: <%= colors['accent'] || '#e74c3c' %>;
+      --text-color: <%= colors['text'] || '#ecf0f1' %>;
+      --background-color: <%= colors['background'] || '#1a1a1a' %>;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><%= title %></h1>
+      <p>Welcome to the Darkfang MUD Web Interface</p>
+    </header>
+    
+    <main>
+      <div class="login-container">
+        <div class="tabs">
+          <button class="tab-button active" data-tab="login">Login</button>
+          <button class="tab-button" data-tab="register">Register</button>
+        </div>
+        
+        <div class="tab-content active" id="login-tab">
+          <form id="login-form">
+            <div class="form-group">
+              <label for="login-email">Email</label>
+              <input type="email" id="login-email" required>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <input type="password" id="login-password" required>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn">Login</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="tab-content" id="register-tab">
+          <form id="register-form">
+            <div class="form-group">
+              <label for="register-email">Email</label>
+              <input type="email" id="register-email" required>
+            </div>
+            <div class="form-group">
+              <label for="register-password">Password</label>
+              <input type="password" id="register-password" required>
+            </div>
+            <div class="form-group">
+              <label for="register-confirm">Confirm Password</label>
+              <input type="password" id="register-confirm" required>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn">Register</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <div class="status-message" id="status-message"></div>
+    </main>
+    
+    <footer>
+      <p>Powered by Darkfang MUD Engine</p>
+    </footer>
+  </div>
+  
+  <script src="/js/jquery-3.6.0.min.js"></script>
+  <script src="/js/index.js"></script>
+</body>
+</html>

@@ -2,6 +2,16 @@ server:
   host: 0.0.0.0
   port: 4532
 
+web:
+  enabled: true
+  port: 4533
+  colors:
+    primary: "#2c3e50"    # Dark blue-green
+    secondary: "#34495e"  # Darker blue-green
+    accent: "#e74c3c"     # Red
+    text: "#ecf0f1"       # Light gray
+    background: "#1a1a1a" # Dark background
+
 darkfang:
   title: Darkfang Example
   description: A mysterious demo of Darkfang capabilities.

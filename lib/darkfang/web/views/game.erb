@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Game</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    :root {
+      --primary-color: <%= colors['primary'] || '#2c3e50' %>;
+      --secondary-color: <%= colors['secondary'] || '#34495e' %>;
+      --accent-color: <%= colors['accent'] || '#e74c3c' %>;
+      --text-color: <%= colors['text'] || '#ecf0f1' %>;
+      --background-color: <%= colors['background'] || '#1a1a1a' %>;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <header>
+      <h1><%= title %></h1>
+      <div class="character-info">
+        <span id="character-name">Not logged in</span>
+        <button id="logout-button" class="btn-small">Logout</button>
+      </div>
+    </header>
+    
+    <main>
+      <div id="game-output" class="game-output"></div>
+      
+      <div class="game-input">
+        <form id="command-form">
+          <input type="text" id="command-input" placeholder="Enter command or type /help..." autocomplete="off">
+          <button type="submit" class="btn">Send</button>
+        </form>
+      </div>
+      
+      <div class="quick-commands">
+        <button class="quick-cmd" data-cmd="/look">Look</button>
+        <button class="quick-cmd" data-cmd="/inventory">Inventory</button>
+        <button class="quick-cmd" data-cmd="/help">Help</button>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Powered by Darkfang MUD Engine</p>
+    </footer>
+  </div>
+  
+  <script src="/js/jquery-3.6.0.min.js"></script>
+  <script src="/js/game.js"></script>
+</body>
+</html>
