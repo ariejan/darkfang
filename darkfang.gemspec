@@ -38,20 +38,21 @@ Gem::Specification.new do |spec|
 
   # Specify which files should be added to the gem when it is released.
   spec.files = Dir.glob([
-    "lib/**/*.rb",
-    "lib/darkfang/web/**/*",
-    "exe/**/*",
-    "*.md",
-    "LICENSE.txt"
-  ])
+                          "lib/**/*.rb",
+                          "lib/darkfang/web/**/*",
+                          "exe/**/*",
+                          "*.md",
+                          "LICENSE.txt"
+                        ])
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency("thor", "~> 1.3", ">= 1.3.1")
   spec.add_dependency("bcrypt", "~> 3.1")
-  spec.add_dependency("sinatra", "~> 3.0")
-  spec.add_dependency("thin", "~> 1.8")
   spec.add_dependency("faye-websocket", "~> 0.11")
   spec.add_dependency("logger", "~> 1.6")
+  spec.add_dependency("ostruct", "~> 0.6.0")
+  spec.add_dependency("sinatra", "~> 3.0")
+  spec.add_dependency("thin", "~> 1.8")
+  spec.add_dependency("thor", "~> 1.3", ">= 1.3.1")
 end
