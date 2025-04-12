@@ -53,4 +53,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency("sinatra", "~> 3.0")
   spec.add_dependency("thin", "~> 1.8")
   spec.add_dependency("faye-websocket", "~> 0.11")
+  spec.add_dependency("logger", "~> 1.6")
 end

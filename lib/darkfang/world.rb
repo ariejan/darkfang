@@ -16,7 +16,7 @@ module Darkfang
 
       load_rooms
       load_items
-      
+
       @loaded = true
     end
 
@@ -25,17 +25,15 @@ module Darkfang
       return unless Dir.exist?(rooms_dir)
 
       Dir.glob(File.join(rooms_dir, "*.yml")).each do |room_file|
-        begin
-          data = YAML.safe_load_file(room_file, permitted_classes: [Symbol])
-          next unless data["room"]
+        data = YAML.safe_load_file(room_file, permitted_classes: [Symbol])
+        next unless data["room"]
 
-          room_id = File.basename(room_file, ".yml")
-          @rooms[room_id] = Room.new(room_id, data["room"])
-          
-          Darkfang.logger.info("Loaded room: #{room_id}")
-        rescue => e
-          Darkfang.logger.error("Error loading room #{room_file}: #{e.message}")
-        end
+        room_id = File.basename(room_file, ".yml")
+        @rooms[room_id] = Room.new(room_id, data["room"])
+
+        Darkfang.logger.debug("Loaded room: #{room_id}")
+      rescue StandardError => e
+        Darkfang.logger.error("Error loading room #{room_file}: #{e.message}")
       end
     end
 
@@ -44,17 +42,15 @@ module Darkfang
       return unless Dir.exist?(items_dir)
 
       Dir.glob(File.join(items_dir, "*.yml")).each do |item_file|
-        begin
-          data = YAML.safe_load_file(item_file, permitted_classes: [Symbol])
-          next unless data["item"]
+        data = YAML.safe_load_file(item_file, permitted_classes: [Symbol])
+        next unless data["item"]
 
-          item_id = File.basename(item_file, ".yml")
-          @items[item_id] = Item.new(item_id, data["item"])
-          
-          Darkfang.logger.info("Loaded item: #{item_id}")
-        rescue => e
-          Darkfang.logger.error("Error loading item #{item_file}: #{e.message}")
-        end
+        item_id = File.basename(item_file, ".yml")
+        @items[item_id] = Item.new(item_id, data["item"])
+
+        Darkfang.logger.debug("Loaded item: #{item_id}")
+      rescue StandardError => e
+        Darkfang.logger.error("Error loading item #{item_file}: #{e.message}")
       end
     end
 
