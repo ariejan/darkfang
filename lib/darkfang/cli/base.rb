@@ -35,7 +35,7 @@ module Darkfang
           end
 
           # Start the server
-          @server.start
+          server.start
 
           # Wait for server to finish
           Thread.current.join
