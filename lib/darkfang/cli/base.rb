@@ -66,6 +66,27 @@ module Darkfang
         end
       end
 
+      desc "new", "Create a new Darkfang MUD project"
+      argument :directory, type: :string, desc: "Directory to create the new project in"
+      def new
+        # Create project directory
+        FileUtils.mkdir_p(directory)
+
+        # Copy example files
+        example_dir = File.expand_path("../../../example", __dir__)
+        FileUtils.cp_r(Dir.glob(File.join(example_dir, "*")), directory)
+
+        # Initialize git repository
+        Dir.chdir(directory) do
+          system("git init") if system("which git > /dev/null 2>&1")
+        end
+
+        Darkfang.logger.info("Created new Darkfang project in #{directory}")
+        Darkfang.logger.info("To start the server:")
+        Darkfang.logger.info("  cd #{directory}")
+        Darkfang.logger.info("  darkfang serve")
+      end
+
       private
 
       def setup_data_directory
