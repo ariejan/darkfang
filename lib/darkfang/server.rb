@@ -31,10 +31,10 @@ module Darkfang
 
       # Start web server if enabled
       if @web_enabled
-        require_relative 'web/server'
+        require_relative "web/server"
         @web_server = Darkfang::Web::Server.new(@host, @web_port)
         @web_server.start
-        Darkfang.logger.info("Web UI available at http://#{@host == '0.0.0.0' ? 'localhost' : @host}:#{@web_port}")
+        Darkfang.logger.info("Web UI available at http://#{@host == "0.0.0.0" ? "localhost" : @host}:#{@web_port}")
       end
 
       # Start automation thread
@@ -42,7 +42,7 @@ module Darkfang
         while @running
           begin
             Darkfang.world.run_automations
-          rescue => e
+          rescue StandardError => e
             Darkfang.logger.error("Error in automation: #{e.message}")
           end
           sleep 1
@@ -56,29 +56,25 @@ module Darkfang
             client = @server.accept
             connection = Connection.new(client)
             @connections << connection
-            
+
             # Start a new thread for each connection
             Thread.new do
-              begin
-                connection.handle
-              rescue => e
-                Darkfang.logger.error("Error handling connection: #{e.message}")
-              ensure
-                @connections.delete(connection)
-                connection.close
-              end
+              connection.handle
+            rescue StandardError => e
+              Darkfang.logger.error("Error handling connection: #{e.message}")
+            ensure
+              @connections.delete(connection)
+              connection.close
             end
-          rescue => e
+          rescue StandardError => e
             Darkfang.logger.error("Error accepting connection: #{e.message}")
-            break if !@running
+            break unless @running
           end
         end
       end
 
       # Keep the server running until shutdown
-      while @running
-        sleep 0.1
-      end
+      sleep 0.1 while @running
 
       # Return immediately after starting threads
       @accept_thread
@@ -88,20 +84,17 @@ module Darkfang
       return unless @running
 
       @running = false
-      
+
       # Close all connections
       @connections.each(&:close)
       @connections.clear
-      
-      # Close the server
-      @server.close if @server
-      
+
       # Stop the web server if enabled
       @web_server&.stop if @web_enabled
-      
+
       # Stop the automation thread
       @automation_thread&.kill
-      
+
       # Stop the accept thread
       @accept_thread&.kill
 
