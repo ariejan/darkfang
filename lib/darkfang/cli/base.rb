@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "server"
-
 module Darkfang
   module CLI
     class Base < Thor
