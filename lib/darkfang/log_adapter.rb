@@ -48,7 +48,8 @@ module Darkfang
 
     # Private: Format a topic for logging
     def formatted_topic(topic, colon: false)
-      "#{topic}#{colon ? ": " : " "}".rjust(20)
+      timestamp = Time.now.strftime("%Y-%m-%d %H:%M:%S %z")
+      "#{timestamp} #{topic}#{colon ? ": " : " "}".rjust(40)
     end
 
     # Private: Format a log message

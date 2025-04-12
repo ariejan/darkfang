@@ -26,8 +26,8 @@ module Darkfang
       @server = TCPServer.new(@host, @port)
       @running = true
 
-      Darkfang.logger.info("Telnet server started on #{@host}:#{@port}")
       Darkfang.logger.info("Game title: #{Darkfang.config.title}")
+      Darkfang.logger.info("Telnet server started on #{@host}:#{@port}")
 
       # Start web server if enabled
       if @web_enabled
