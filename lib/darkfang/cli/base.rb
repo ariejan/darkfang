@@ -14,29 +14,38 @@ module Darkfang
         setup_data_directory
         host = options[:host] || Darkfang.config&.server_host || "0.0.0.0"
         port = options[:port] || Darkfang.config&.server_port || 4532
-        web_enabled = options[:web].nil? ? (Darkfang.config&.web_enabled.nil? ? true : Darkfang.config&.web_enabled) : options[:web]
+        web_enabled = if options[:web].nil?
+                        Darkfang.config&.web_enabled.nil? || Darkfang.config&.web_enabled
+                      else
+                        options[:web]
+                      end
         web_port = options[:web_port] || Darkfang.config&.web_port || (port + 1)
 
         begin
           # Load configuration
           Darkfang.load_config
-          
+
           # Start server
           server = Darkfang::Server.new(host, port, web_enabled: web_enabled, web_port: web_port)
-          
-          # Set up signal trap for Ctrl+C
+
+          # Set up signal handling
+          @shutdown_requested = false
           trap("INT") do
-            Darkfang.logger.info("server", "Stopping server... (Ctrl+C pressed)")
-            server.stop
-            exit
+            puts
+            @shutdown_requested = true
           end
 
           # Start the server
           server.start
 
-          # Wait for server to finish
-          Thread.current.join
-        rescue => e
+          # Main loop
+          sleep 0.1 until @shutdown_requested
+
+          # Handle shutdown
+          Darkfang.logger.info("Stopping server... (Ctrl+C pressed)")
+          server.stop
+          exit
+        rescue StandardError => e
           Darkfang.logger.error("Error starting server: #{e.message}")
           Darkfang.logger.error("Stack trace: #{e.backtrace.join("\n")}")
           exit 1
@@ -61,9 +70,8 @@ module Darkfang
 
       def setup_data_directory
         dir = options[:directory] || Dir.pwd
-        unless File.directory?(dir)
-          raise ConfigurationError, "Directory not found: #{dir}"
-        end
+        raise ConfigurationError, "Directory not found: #{dir}" unless File.directory?(dir)
+
         Darkfang.root = File.expand_path(dir)
       end
     end

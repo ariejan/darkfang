@@ -73,9 +73,6 @@ module Darkfang
         end
       end
 
-      # Keep the server running until shutdown
-      sleep 0.1 while @running
-
       # Return immediately after starting threads
       @accept_thread
     end
